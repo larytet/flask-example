@@ -14,7 +14,7 @@ def hello(name=None):
     return flask.render_template('hello.html', name=name)
 
 def search():
-    search_form = forms.SearchForm(request.form)
+    search_form = forms.SearchForm(flask.request.form)
     request.form()
     return flask.render_template('search.html')
 
