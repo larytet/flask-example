@@ -1,6 +1,8 @@
 import flask
 import views
 
+import forms
+
 app = flask.Flask(__name__, instance_relative_config=True)
 
 app.config.from_object('config')
@@ -12,3 +14,4 @@ def not_found(error):
     return resp
 
 views.add_rules(app)
+search_form = forms.SearchForm()
