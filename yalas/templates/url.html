@@ -1,4 +1,5 @@
-<!doctype html>
-<title>Link {{ name }} </title>
-<h1><a href="{{ url }}">{{ name }}</a></h1>
-
+{% extends "layout.html" %}
+{% block title %} Link {{ name }} {% endblock %}
+{% block body %}
+	<h1> <a href="{{ url }}">{{ name }}</a> </h1>
+{% endblock %}
