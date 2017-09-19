@@ -36,7 +36,7 @@ def search():
 def add_rules(app):
     app.add_url_rule('/', 'index', index)
     app.add_url_rule('/link', 'link', link)
-    app.add_url_rule('/search', 'search', search, methods=['GET', 'POST'])
+    app.add_url_rule('/search', 'search', search) #, methods=['GET', 'POST'])
     app.add_url_rule('/hello/', 'hello', hello)
     app.add_url_rule('/hello/<string:name>', 'hello', hello)
     
