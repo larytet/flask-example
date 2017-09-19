@@ -14,11 +14,12 @@ def hello(name=None):
     return flask.render_template('hello.html', name=name)
 
 class ReusableForm(wtforms.Form):
-    name = wtforms.TextField('Search:', validators=[wtforms.validators.required()])
+    search = wtforms.TextField('Search:', validators=[wtforms.validators.required()])
  
 
 def search():
     search_form = ReusableForm(flask.request.form)
+
     print "Form errors:", search_form.errors
     if flask.request.method == 'POST':
         search_query = flask.request.form['search']
