@@ -18,7 +18,6 @@ class ReusableForm(wtforms.Form):
  
 
 def search():
-    '''
     search_form = ReusableForm(flask.request.form)
 
     print "Form errors:", search_form.errors
@@ -30,13 +29,13 @@ def search():
             flask.flash('Search ' + search_query)
         else:
             flask.flash('All the form fields are required. ')
-    '''
-    return flask.render_template('hello.html') #, form=search_form)
+ 
+    return flask.render_template('hello.html', form=search_form)
  
 def add_rules(app):
     app.add_url_rule('/', 'index', index)
     app.add_url_rule('/link', 'link', link)
-    app.add_url_rule('/search', 'search', search) #, methods=['GET', 'POST'])
+    app.add_url_rule('/search', 'search', search, methods=['GET', 'POST'])
     app.add_url_rule('/hello/', 'hello', hello)
     app.add_url_rule('/hello/<string:name>', 'hello', hello)
     
