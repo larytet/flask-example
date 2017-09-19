@@ -13,6 +13,11 @@ def index():
 def hello(name=None):
     return flask.render_template('hello.html', name=name)
 
+class BaseForm(wtforms.ext.csrf.session.SessionSecureForm):
+    SECRET_KEY = 'EPj00jpfj8Gx1SjnyLxwB12qQnQ9DJYe0Ym'
+    TIME_LIMIT = timedelta(minutes=20)
+
+
 def search():
     search_form = forms.SearchForm(flask.request.form)
     request.form()
