@@ -19,10 +19,10 @@ class ReusableForm(wtforms.Form):
 
 def search():
     search_form = ReusableForm(flask.request.form)
-    print search_form.errors
+    print "Form errors:", search_form.errors
     if flask.request.method == 'POST':
         search_query = flask.request.form['search']
-        print search_query
+        print "Search query:", search_query
         if search_form.validate():
             # Save the comment here.
             flask.flash('Search ' + search_query)
