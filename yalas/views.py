@@ -30,7 +30,7 @@ def search():
         else:
             flask.flash('All the form fields are required. ')
  
-    return flask.render_template('hello.html', form=search_form)
+    return flask.render_template('search.html', form=search_form)
  
 def add_rules(app):
     app.add_url_rule('/', 'index', index)
