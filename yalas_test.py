@@ -8,7 +8,7 @@ from yalas import app
 class AppTestCase(unittest.TestCase):
 
     def setUp(self):
-        self.app = app
+        self.app = app.app
         app.testing = True
 
     def tearDown(self):
