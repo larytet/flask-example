@@ -8,9 +8,7 @@ from yalas import app
 class AppTestCase(unittest.TestCase):
 
     def setUp(self):
-        app_file = app.app
-        print app_file
-        app_file.app.testing = True
+        app.testing = True
         print app_file
         self.app = app_file.test_client()
 
