@@ -20,7 +20,7 @@ class Views:
             FlaskRoute('/search', 'search', self.search, methods=['GET', 'POST']),
             FlaskRoute('/hello/', 'hello', self.hello, None),
             FlaskRoute('/hello/<string:name>', 'hello', self.hello, None),
-            FlaskRoute('/upload', 'upload', self.upload_file, methods=['GET', 'POST'], None),
+            FlaskRoute('/upload', 'upload', self.upload_file, methods=['GET', 'POST']),
         ]
         for flask_route in ROUTES:
             if flask_route.methods is None:
