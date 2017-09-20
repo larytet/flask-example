@@ -1,7 +1,7 @@
 import os
 import unittest
 import tempfile
-
+from StringIO import StringIO
 
 from yalas import app
 
@@ -27,6 +27,11 @@ class AppTestCase(unittest.TestCase):
         rv = self.app.get('/upload')
         assert b'Upload' in rv.data
         assert b'input type' in rv.data
-        
+        data = {
+            'file': (StringIO('some rnadom data'), 'status.txt'),
+        }        
+        rv = self.app.post('/upload', data=data, follow_redirects=True)
+        assert b'Ok' in rv.data
+                
 if __name__ == '__main__':
     unittest.main()
