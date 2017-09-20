@@ -3,13 +3,13 @@ import unittest
 import tempfile
 
 
-from yalas import app
+import yalas
 
 class AppTestCase(unittest.TestCase):
 
     def setUp(self):
-        app.testing = True
-        self.app = app.test_client()
+        self.app = yalas.app
+        self.app.testing = True
 
     def tearDown(self):
         os.close(self.db_fd)
