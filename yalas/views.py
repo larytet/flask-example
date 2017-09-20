@@ -52,7 +52,7 @@ class Views:
     def allowed_file(self, filename):
         return '.' in filename and filename.rsplit('.', 1)[1].lower() in self.ALLOWED_EXTENSIONS
     
-    def upload_file(self):
+    def upload_file(self, methods=['GET', 'POST']):
         request = flask.request
         if request.method == 'POST':
             # check if the post request has the file part
