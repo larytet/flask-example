@@ -2,6 +2,7 @@ import os
 import unittest
 import tempfile
 from StringIO import StringIO
+import collections
 
 from yalas import app
 
@@ -27,12 +28,21 @@ class AppTestCase(unittest.TestCase):
         rv = self.app.get('/upload')
         assert b'Upload' in rv.data
         assert b'input type' in rv.data
-        data = {
-            'file': (StringIO('some random data'), 'status.txt'),
-        }        
-        rv = self.app.post('/upload', data=data, follow_redirects=True)
-        print rv.data
-        assert b'Uploaded' in rv.data
+        
+        UploadTest = collections.namedtuple('UploadTest', ['filename', 'expected_response'])
+        
+        upload_tests = [
+            UploadTest('status.txt', b'Uploaded'),
+            UploadTest('status.html', b'not supported'),
+        ]
+        for test in upload_tests:
+            
+            data = {
+                'file': (StringIO('some random data'), test.filename),
+            }        
+            rv = self.app.post('/upload', data=data, follow_redirects=True)
+            print rv.data
+            assert test.expected_response in rv.data
         
         data = {
             'file': (StringIO('some random data'), 'status.html'),
