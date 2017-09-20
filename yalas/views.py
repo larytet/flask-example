@@ -2,20 +2,30 @@ import flask
 import wtforms
 import werkzeug
 import os
+import collections
 
-
+FlaskRoute = namedtuple('FlaskRoute', ['route', 'name', 'cb', 'methods'], verbose=False)
 
 class Views:
     
     def __init__(self, app):
         self.app = app
+        self.add_routes(app)
 
-        app.add_url_rule('/', 'index', self.index)
-        app.add_url_rule('/link', 'link', self.link)
-        app.add_url_rule('/search', 'search', self.search, methods=['GET', 'POST'])
-        app.add_url_rule('/hello/', 'hello', self.hello)
-        app.add_url_rule('/hello/<string:name>', 'hello', self.hello)
-        app.add_url_rule('/upload', 'upload', self.upload_file, methods=['GET', 'POST'])
+    
+    def add_routes(self, app):
+        ROUTES = [
+            FlaskRoute('/', 'index', self.index, None),
+            FlaskRoute('/link', 'link', self.link, None),
+            FlaskRoute('/search', 'search', self.search, methods=['GET', 'POST']),
+            FlaskRoute('/hello/', 'hello', self.hello, None),
+            FlaskRoute('/hello/<string:name>', 'hello', self.hello, None),
+            FlaskRoute('/upload', 'upload', self.upload_file, methods=['GET', 'POST'], None),
+        ]
+        for flask_route in ROUTES:
+            if flask_route.methods is None:
+                flask_route.methods = ['GET']
+            app.add_url_rule(flask_route.route, flask_route.name, flask_route.cb, flask_route.methods)
     
     def link(self):
         url = flask.url_for('static', filename='style.css')
