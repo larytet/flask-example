@@ -9,6 +9,8 @@ class AppTestCase(unittest.TestCase):
 
     def setUp(self):
         yalas.app.testing = True
+        app_file = yalas.app
+        print app_file
         self.app = yalas.app.app.test_client()
 
     def tearDown(self):
