@@ -1,6 +1,6 @@
 import flask
 import wtforms
-
+import werkzeug
 
 def link():
     url = flask.url_for('static', filename='style.css')
@@ -31,6 +31,13 @@ def search():
             flask.flash('All the form fields are required. ')
  
     return flask.render_template('search.html', form=search_form)
+
+def upload_file():
+    if flask.request.method == 'POST':
+        f = flask.request.files['the_file']
+        f.save('./' + werkzeug.utils.secure_filename(f.filename))
+    else:
+        pass
  
 def add_rules(app):
     app.add_url_rule('/', 'index', index)
@@ -38,5 +45,6 @@ def add_rules(app):
     app.add_url_rule('/search', 'search', search, methods=['GET', 'POST'])
     app.add_url_rule('/hello/', 'hello', hello)
     app.add_url_rule('/hello/<string:name>', 'hello', hello)
+    app.add_url_rule('/upload_file', 'upload_file', upload_file)
     
     
