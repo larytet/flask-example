@@ -16,5 +16,9 @@ class AppTestCase(unittest.TestCase):
         os.close(self.db_fd)
         os.unlink(app.config['DATABASE'])
 
+    def test_index(self):
+        rv = self.app.get('/')
+        assert b'Index Page' in rv.data
+        
 if __name__ == '__main__':
     unittest.main()
