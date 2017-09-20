@@ -20,6 +20,7 @@ class AppTestCase(unittest.TestCase):
 
     def test_hello(self):
         rv = self.app.get('/hello/test1')
+        print rv.data
         assert b'hello' in rv.data
         assert b'test1' in rv.data
         
