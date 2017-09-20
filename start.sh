@@ -8,5 +8,8 @@ flask_process_id=$!
 echo Flask is started $flask_process_id
 sleep 2
 python $init_path/../yalas_test.py
-kill $flask_process_id
+#kill $flask_process_id
 cd $current_dir
+
+# kill all child processes
+kill 0
