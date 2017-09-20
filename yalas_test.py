@@ -36,10 +36,7 @@ class AppTestCase(unittest.TestCase):
             UploadTest('status.html', b'not supported'),
         ]
         for test in upload_tests:
-            
-            data = {
-                'file': (StringIO('some random data'), test.filename),
-            }        
+            data = {'file': (StringIO('some random data'), test.filename)}        
             rv = self.app.post('/upload', data=data, follow_redirects=True)
             assert test.expected_response in rv.data
                 
