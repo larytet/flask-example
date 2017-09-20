@@ -11,7 +11,7 @@ class AppTestCase(unittest.TestCase):
         yalas.app.testing = True
         app_file = yalas.app
         print app_file
-        self.app = yalas.app.app.test_client()
+        self.app = app_file.test_client()
 
     def tearDown(self):
         pass
