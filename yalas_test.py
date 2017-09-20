@@ -41,7 +41,6 @@ class AppTestCase(unittest.TestCase):
                 'file': (StringIO('some random data'), test.filename),
             }        
             rv = self.app.post('/upload', data=data, follow_redirects=True)
-            print rv.data
             assert test.expected_response in rv.data
         
         data = {
