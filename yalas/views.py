@@ -50,7 +50,12 @@ class Views:
     # Security related feature- make sure that html, php&friends are not here
     ALLOWED_EXTENSIONS = set(['txt', 'pdf', 'png', 'jpg', 'jpeg', 'gif'])
     def allowed_file(self, filename):
-        return '.' in filename and filename.rsplit('.', 1)[1].lower() in self.ALLOWED_EXTENSIONS
+        result = '.' in filename
+        extension = None
+        if result:
+            extension = filename.rsplit('.', 1)[1].lower()
+            result = extension in self.ALLOWED_EXTENSIONS
+        return result, extension  
     
     def upload_file(self):
         request = flask.request
@@ -59,17 +64,27 @@ class Views:
             if 'file' not in request.files:
                 flask.flash('No file part in the request')
                 return flask.redirect(request.url)
-            attr_file = request.files['file']
+            attr_file = request.files.get('file', None)
+            
+            if attr_file is None:
+                flask.flash('No file attribute in the POST')
+                return flask.redirect(request.url)
+            
             # if user does not select file, browser also
             # submit a empty part without filename
             if attr_file.filename == '':
                 flask.flash('No selected file')
                 return flask.redirect(request.url)
-            if attr_file and self.allowed_file(attr_file.filename):
+
+            is_allowed, file_extension = self.allowed_file(attr_file.filename)
+            if is_allowed:
                 filename = werkzeug.utils.secure_filename(attr_file.filename)
                 flask.flash('Uploaded {0} to {1}'.format(filename, self.app.config.upload_folder))
                 attr_file.save(os.path.join(self.app.config.upload_folder, filename))
                 return flask.redirect(flask.url_for('upload', filename=filename))
+            else:
+                flask.flash('File type {0} is not supported'.format(file_extension))
+                return flask.redirect(request.url)
 
         return flask.render_template('upload.html') 
          
