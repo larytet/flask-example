@@ -28,7 +28,14 @@ class AppTestCase(unittest.TestCase):
         assert b'Upload' in rv.data
         assert b'input type' in rv.data
         data = {
-            'file': (StringIO('some rnadom data'), 'status.txt'),
+            'file': (StringIO('some random data'), 'status.txt'),
+        }        
+        rv = self.app.post('/upload', data=data, follow_redirects=True)
+        print rv.data
+        assert b'Uploaded' in rv.data
+        
+        data = {
+            'file': (StringIO('some random data'), 'status.html'),
         }        
         rv = self.app.post('/upload', data=data, follow_redirects=True)
         print rv.data
