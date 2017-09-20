@@ -15,7 +15,7 @@ class Views:
         app.add_url_rule('/search', 'search', self.search, methods=['GET', 'POST'])
         app.add_url_rule('/hello/', 'hello', self.hello)
         app.add_url_rule('/hello/<string:name>', 'hello', self.hello)
-        app.add_url_rule('/upload', 'upload_file', self.upload_file)
+        app.add_url_rule('/upload', 'upload_file', self.upload_file, methods=['GET', 'POST'])
     
     def link(self):
         url = flask.url_for('static', filename='style.css')
@@ -52,7 +52,7 @@ class Views:
     def allowed_file(self, filename):
         return '.' in filename and filename.rsplit('.', 1)[1].lower() in self.ALLOWED_EXTENSIONS
     
-    def upload_file(self, methods=['GET', 'POST']):
+    def upload_file(self):
         request = flask.request
         if request.method == 'POST':
             # check if the post request has the file part
