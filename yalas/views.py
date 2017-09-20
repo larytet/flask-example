@@ -26,7 +26,7 @@ class Views:
             methods = flask_route.methods 
             if methods is None:
                 methods = ['GET']
-            app.add_url_rule(flask_route.route, flask_route.name, flask_route.cb, methods)
+            app.add_url_rule(flask_route.route, flask_route.name, flask_route.cb, methods=methods)
     
     def link(self):
         url = flask.url_for('static', filename='style.css')
