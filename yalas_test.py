@@ -39,7 +39,7 @@ class AppTestCase(unittest.TestCase):
         }        
         rv = self.app.post('/upload', data=data, follow_redirects=True)
         print rv.data
-        assert b'Uploaded' in rv.data
+        assert b'not supported' in rv.data
                 
 if __name__ == '__main__':
     unittest.main()
