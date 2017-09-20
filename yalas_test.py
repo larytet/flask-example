@@ -16,8 +16,12 @@ class AppTestCase(unittest.TestCase):
 
     def test_index(self):
         rv = self.app.get('/')
-        print rv
-        assert b'In dex Page' in rv.data
+        assert b'Index Page' in rv.data
+
+    def test_hello(self):
+        rv = self.app.get('/hello/test1')
+        assert b'hello' in rv.data
+        assert b'test1' in rv.data
         
 if __name__ == '__main__':
     unittest.main()
