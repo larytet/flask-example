@@ -3,7 +3,7 @@ import unittest
 import tempfile
 
 
-from app import yalas
+from yalas import app
 
 class AppTestCase(unittest.TestCase):
 
