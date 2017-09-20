@@ -20,9 +20,12 @@ class AppTestCase(unittest.TestCase):
 
     def test_hello(self):
         rv = self.app.get('/hello/test1')
-        print rv.data
         assert b'Hello' in rv.data
         assert b'test1' in rv.data
+        
+    def test_upload(self):
+        rv = self.app.get('/upload')
+        print rv.data
         
 if __name__ == '__main__':
     unittest.main()
