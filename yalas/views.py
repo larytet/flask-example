@@ -67,9 +67,10 @@ class Views:
                 return flask.redirect(request.url)
             if attr_file and self.allowed_file(attr_file.filename):
                 filename = werkzeug.utils.secure_filename(attr_file.filename)
+                flask.flash('Uploaded {0} to {1}'.format(filename, self.app.config.upload_folder))
                 attr_file.save(os.path.join(self.app.config.upload_folder, filename))
-                return flask.redirect(flask.url_for('uploaded_file',
-                                        filename=filename))
+                return flask.redirect(flask.url_for('uploaded_file', filename=filename))
+
         return flask.render_template('upload.html') 
          
     
