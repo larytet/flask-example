@@ -8,8 +8,8 @@ import yalas
 class AppTestCase(unittest.TestCase):
 
     def setUp(self):
-        yalas.app.testing = True
         app_file = yalas.app
+        app_file.app.testing = True
         print app_file
         self.app = app_file.test_client()
 
