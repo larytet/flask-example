@@ -29,6 +29,11 @@ def not_found(error):
     resp.headers['X-Something'] = 'A value' # TODO What is it
     return resp
 
+@app.errorhandler(405)
+def method_not_allowed(error):
+    resp = flask.make_response(flask.render_template('error.html', error_code=405), 405)
+    resp.headers['X-Something'] = 'A value' # TODO What is it
+    return resp
 
 views_object = views.Views(app)
 
