@@ -15,7 +15,7 @@ class Views:
         app.add_url_rule('/search', 'search', self.search, methods=['GET', 'POST'])
         app.add_url_rule('/hello/', 'hello', self.hello)
         app.add_url_rule('/hello/<string:name>', 'hello', self.hello)
-        app.add_url_rule('/upload', 'upload_file', self.upload_file, methods=['GET', 'POST'])
+        app.add_url_rule('/upload', 'upload', self.upload_file, methods=['GET', 'POST'])
     
     def link(self):
         url = flask.url_for('static', filename='style.css')
@@ -69,7 +69,7 @@ class Views:
                 filename = werkzeug.utils.secure_filename(attr_file.filename)
                 flask.flash('Uploaded {0} to {1}'.format(filename, self.app.config.upload_folder))
                 attr_file.save(os.path.join(self.app.config.upload_folder, filename))
-                return flask.redirect(flask.url_for('uploaded_file', filename=filename))
+                return flask.redirect(flask.url_for('upload', filename=filename))
 
         return flask.render_template('upload.html') 
          
