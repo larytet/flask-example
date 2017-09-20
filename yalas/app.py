@@ -25,12 +25,14 @@ create_folder(UPLOAD_FOLDER)
 
 @app.errorhandler(404)
 def not_found(error):
+    flask.flash(error)
     resp = flask.make_response(flask.render_template('error.html', error_code=404), 404)
     resp.headers['X-Something'] = 'A value' # TODO What is it
     return resp
 
 @app.errorhandler(405)
 def method_not_allowed(error):
+    flask.flash(error)
     resp = flask.make_response(flask.render_template('error.html', error_code=405), 405)
     resp.headers['X-Something'] = 'A value' # TODO What is it
     return resp
