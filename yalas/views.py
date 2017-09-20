@@ -4,7 +4,7 @@ import werkzeug
 import os
 import collections
 
-FlaskRoute = namedtuple('FlaskRoute', ['route', 'name', 'cb', 'methods'], verbose=False)
+FlaskRoute = collections.namedtuple('FlaskRoute', ['route', 'name', 'cb', 'methods'], verbose=False)
 
 class Views:
     
