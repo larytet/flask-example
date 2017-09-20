@@ -10,6 +10,7 @@ def create_folder(name):
         if e.errno != errno.EEXIST:
             raise
 
+global app
 app = flask.Flask(__name__, instance_relative_config=True)
 
 app.config.from_object('config')
