@@ -31,6 +31,7 @@ class AppTestCase(unittest.TestCase):
             'file': (StringIO('some rnadom data'), 'status.txt'),
         }        
         rv = self.app.post('/upload', data=data, follow_redirects=True)
+        print rv.data
         assert b'Ok' in rv.data
                 
 if __name__ == '__main__':
