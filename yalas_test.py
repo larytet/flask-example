@@ -42,13 +42,6 @@ class AppTestCase(unittest.TestCase):
             }        
             rv = self.app.post('/upload', data=data, follow_redirects=True)
             assert test.expected_response in rv.data
-        
-        data = {
-            'file': (StringIO('some random data'), 'status.html'),
-        }        
-        rv = self.app.post('/upload', data=data, follow_redirects=True)
-        print rv.data
-        assert b'not supported' in rv.data
                 
 if __name__ == '__main__':
     unittest.main()
