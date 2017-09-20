@@ -12,7 +12,7 @@ class AppTestCase(unittest.TestCase):
         app.testing = True
 
     def tearDown(self):
-        os.close(self.db_fd)
+        pass
 
     def test_index(self):
         rv = self.app.get('/')
