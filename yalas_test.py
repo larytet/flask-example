@@ -25,7 +25,8 @@ class AppTestCase(unittest.TestCase):
         
     def test_upload(self):
         rv = self.app.get('/upload')
-        print rv.data
+        assert b'Upload' in rv.data
+        assert b'input type' in rv.data
         
 if __name__ == '__main__':
     unittest.main()
