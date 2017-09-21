@@ -10,7 +10,9 @@ class AppTestCase(unittest.TestCase):
 
     def setUp(self):
         app.testing = True
-        self.app = app.app.test_client()
+
+        # Create a HTTP client for the server
+        self.app = app.flask_app.test_client()
 
     def tearDown(self):
         pass
