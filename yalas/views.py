@@ -36,6 +36,11 @@ class Views:
         if not username in self.users:
             self.users[username] = {'time':time.clock(), 'searches':[]}
             
+    def update_user_searches(self, username, search_query):
+        userdata = self.get_user_data(username)
+        if userdata:
+            userdata['searches'].append(search_query)
+            
     def get_user_data(self, username):
         return self.users.get(username, None)
         
@@ -120,6 +125,8 @@ class Views:
             if search_form.validate():
                 # Save the comment here.
                 flask.flash('Search ' + search_query)
+                self.update_user_searches(username, search_query)
+                    
             else:
                 flask.flash("Got '{0}'. All the form fields are required. ".format(search_query))
      
