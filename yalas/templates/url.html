@@ -1,5 +1,6 @@
 {% extends "layout.html" %}
 {% block title %} Link {{ name }} {% endblock %}
 {% block body %}
+    {{ super() }}
 	<h1> <a href="{{ url }}">{{ name }}</a> </h1>
 {% endblock %}
