@@ -6,6 +6,7 @@ import collections
 import operator
 
 import time
+import forms
 
 FlaskRoute = collections.namedtuple('FlaskRoute', ['route', 'name', 'cb', 'methods', 'index'], verbose=False)
 
@@ -100,9 +101,7 @@ class Views:
 
         return flask.render_template('upload.html') 
          
-    class SearchForm(wtforms.Form):
-        search = wtforms.TextField('Search:', validators=[wtforms.validators.required()])
-
+        
     def flash_user(self, username):
         if not username:
             flask.flash("Not logged in")
@@ -115,7 +114,7 @@ class Views:
                     
     def search(self):
         request = flask.request
-        search_form = self.SearchForm(request.form)
+        search_form = forms.SearchForm(request.form)
     
         flask.flash("Form errors: {0}".format(search_form.errors))
         if request.method == 'POST':
@@ -134,12 +133,9 @@ class Views:
         return rsp
     
     
-    class LoginForm(wtforms.Form):
-        username = wtforms.TextField('Username:', validators=[wtforms.validators.required()])
-        
     def login(self):
         request = flask.request
-        login_form = self.LoginForm(request.form)
+        login_form = forms.LoginForm(request.form)
         username = None
         if request.method == 'POST':
             username = request.form['username']
