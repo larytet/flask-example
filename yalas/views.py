@@ -126,5 +126,5 @@ class Views:
             # was GET or the credentials were invalid
         rsp = flask.make_response(flask.render_template('/login.html', form=login_form))
         if username:
-            rsp.set_cookie(username)
+            rsp.set_cookie("username", username)
         return rsp
