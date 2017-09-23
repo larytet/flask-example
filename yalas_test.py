@@ -27,7 +27,7 @@ class AppTestCase(unittest.TestCase):
         assert b'test1' in rv.data
 
     def test_search(self):
-        search_query = {'search': "find me"}
+        search_query = dict(search='find me')
         rv = self.app.post('/seacrh', data=search_query, follow_redirects=True)
         assert 'find me' in rv.data
         
