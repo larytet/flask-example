@@ -3,6 +3,7 @@ import wtforms
 import werkzeug
 import os
 import collections
+from _ast import operator
 
 FlaskRoute = collections.namedtuple('FlaskRoute', ['route', 'name', 'cb', 'methods', 'index'], verbose=False)
 
@@ -20,6 +21,7 @@ class Views:
             FlaskRoute('/hello/',               'hello',    self.hello,         None,               True),
             FlaskRoute('/hello/<string:name>',  'hello',    self.hello,         None,               False),
             FlaskRoute('/upload',               'upload',   self.upload_file,   ['GET', 'POST'],    True),
+            FlaskRoute('/login',                'login',    self.upload_file,   ['GET', 'POST'],    True),
         ]
         for flask_route in self.ROUTES:
             methods = flask_route.methods 
@@ -36,6 +38,7 @@ class Views:
         for flask_route in self.ROUTES:
             if flask_route.index:
                 urls.append((flask_route.route, flask_route.name))
+        urls.sort(key=operator.itemgetter(1))
         return flask.render_template('index.html', urls=urls)
     
     def hello(self, name=None):
