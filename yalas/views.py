@@ -34,7 +34,7 @@ class Views:
     
     def log_the_user_in(self, username):
         if not username in self.users:
-            self.users.append({username:{'time':time.clock()}})
+            self.users[username] = {'time':time.clock()}
             
     def get_user_data(self, username):
         return self.users.get(username, None)
