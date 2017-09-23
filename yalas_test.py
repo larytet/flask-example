@@ -26,11 +26,6 @@ class AppTestCase(unittest.TestCase):
         assert b'Hello' in rv.data
         assert b'test1' in rv.data
 
-    def test_search(self):
-        search_query = {"search": 'find me'}
-        rv = self.app.post('/seacrh', data=search_query, follow_redirects=True)
-        #assert 'find me' in rv.data
-        
     def test_upload(self):
         rv = self.app.get('/upload')
         assert b'Upload' in rv.data
@@ -47,5 +42,11 @@ class AppTestCase(unittest.TestCase):
             rv = self.app.post('/upload', data=data, follow_redirects=True)
             assert test.expected_response in rv.data
                 
+    def test_search(self):
+        search_query = {"search": 'find me'}
+        rv = self.app.post('/seacrh', data=search_query, follow_redirects=True)
+        assert 'find me' in rv.data
+        
+
 if __name__ == '__main__':
     unittest.main()
