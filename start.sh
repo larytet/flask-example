@@ -11,5 +11,6 @@ python $init_path/../yalas_test.py
 #kill $flask_process_id
 cd $current_dir
 
+while [ 1 ];do sleep 1;done;
 # kill all child processes
 kill 0
