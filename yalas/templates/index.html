@@ -1,0 +1,8 @@
+{% extends "layout.html" %}
+{% block title %} Index page {% endblock %}
+{% block body %}
+	{%  for url,url_text in urls %}
+		<br><a href="{{ url }}">{{ url_text }}</a>
+	{% endfor %}
+	
+{% endblock %}

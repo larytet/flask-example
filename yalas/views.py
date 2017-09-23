@@ -32,14 +32,14 @@ class Views:
     
     def link(self):
         url = flask.url_for('static', filename='style.css')
+        return flask.render_template('url.html', name="style.css", url=url)
+    
+    def index(self):
         urls = [
             ("/search", "search"),
             ("/upload", "upload"),
         ]
-        return flask.render_template('url.html', name="style.css", urls=urls)
-    
-    def index(self):
-        return 'Index Page'
+        return flask.render_template('index.html', urls=urls)
     
     def hello(self, name=None):
         return flask.render_template('hello.html', name=name)

@@ -1,7 +1,5 @@
 {% extends "layout.html" %}
 {% block title %} Link {{ name }} {% endblock %}
 {% block body %}
-	{%  for url,url_text in urls %}
-		<br><a href="{{ url }}">{{ url_text }}</a>
-	{% endfor %}
+	<h1> <a href="{{ url }}">{{ name }}</a> </h1>
 {% endblock %}
