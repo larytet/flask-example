@@ -44,23 +44,6 @@ class Views:
         search = wtforms.TextField('Search:', validators=[wtforms.validators.required()])
      
     
-    def search(self):
-        request = flask.request
-        search_form = self.ReusableForm(request.form)
-    
-        flask.flash("Form errors: {0}".format(search_form.errors))
-        if request.method == 'POST':
-            print request.form
-            search_query = request.form['search']
-            flask.flash("Search query: {0}".format(search_query))
-            if search_form.validate():
-                # Save the comment here.
-                flask.flash('Search ' + search_query)
-            else:
-                flask.flash('All the form fields are required. ')
-     
-        return flask.render_template('search.html', form=search_form)
-    
     # Security related feature- make sure that html, php&friends are not here
     ALLOWED_EXTENSIONS = set(['txt', 'pdf', 'png', 'jpg', 'jpeg', 'gif'])
     def allowed_file(self, filename):
@@ -102,5 +85,22 @@ class Views:
 
         return flask.render_template('upload.html') 
          
+    def search(self):
+        request = flask.request
+        search_form = self.ReusableForm(request.form)
+    
+        flask.flash("Form errors: {0}".format(search_form.errors))
+        if request.method == 'POST':
+            print request.form
+            search_query = request.form['search']
+            flask.flash("Search query: {0}".format(search_query))
+            if search_form.validate():
+                # Save the comment here.
+                flask.flash('Search ' + search_query)
+            else:
+                flask.flash('All the form fields are required. ')
+     
+        return flask.render_template('search.html', form=search_form)
+    
     
     
