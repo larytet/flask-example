@@ -19,7 +19,7 @@ class AppTestCase(unittest.TestCase):
 
     def test_index(self):
         rv = self.app.get('/')
-        assert b'Index Page' in rv.data
+        assert b'Index' in rv.data
 
     def test_hello(self):
         rv = self.app.get('/hello/test1')
