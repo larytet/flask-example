@@ -4,7 +4,7 @@
     {{ super() }}
     <form action="" method="post">
         {{ form.csrf }}
-        <div class="input text">
+        <div class="input text" name="query">
             {{ form.search.label }} {{ form.search }}
         </div>
  
