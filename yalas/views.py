@@ -14,12 +14,12 @@ class Views:
     
     def add_routes(self, app):
         self.ROUTES = [
-            FlaskRoute('/',                     'index',    self.index,         None,                       True),
-            FlaskRoute('/link',                 'link',     self.link,          None,                       True),
-            FlaskRoute('/search',               'search',   self.search,        methods=['GET', 'POST'],    True),
-            FlaskRoute('/hello/',               'hello',    self.hello,         None,                       True),
-            FlaskRoute('/hello/<string:name>',  'hello',    self.hello,         None,                       False),
-            FlaskRoute('/upload',               'upload',   self.upload_file,   methods=['GET', 'POST'],    True),
+            FlaskRoute('/',                     'index',    self.index,         None,               True),
+            FlaskRoute('/link',                 'link',     self.link,          None,               True),
+            FlaskRoute('/search',               'search',   self.search,        ['GET', 'POST'],    True),
+            FlaskRoute('/hello/',               'hello',    self.hello,         None,               True),
+            FlaskRoute('/hello/<string:name>',  'hello',    self.hello,         None,               False),
+            FlaskRoute('/upload',               'upload',   self.upload_file,   ['GET', 'POST'],    True),
         ]
         for flask_route in self.ROUTES:
             methods = flask_route.methods 
