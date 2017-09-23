@@ -34,7 +34,7 @@ class Views:
     
     def log_the_user_in(self, username):
         if not username in self.users:
-            self.users[username] = {'time':time.clock()}
+            self.users[username] = {'time':time.clock(), 'searches':[]}
             
     def get_user_data(self, username):
         return self.users.get(username, None)
@@ -108,7 +108,12 @@ class Views:
             if not username:
                 flask.flash("Not logged in")
             else:
-                flask.flash("Logged in as '{0}':'{1}'".format(username, self.get_user_data(username)))
+                userdata = self.get_user_data(username)
+                if userdata:
+                    flask.flash("Logged in as '{0}':'{1}'".format(username, userdata))
+                else:
+                    flask.flash("Unknown user '{0}'".format(username))
+                    
                 
             search_query = request.form['search']
             #flask.flash("Search query: {0}".format(search_query))
