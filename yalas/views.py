@@ -107,7 +107,8 @@ class Views:
             else:
                 flask.flash('All the form fields are required. ')
      
-        return flask.render_template('search.html', form=search_form)
+        rsp = flask.make_response(flask.render_template('search.html', form=search_form))
+        return rsp
     
     
     class LoginForm(wtforms.Form):
@@ -122,5 +123,6 @@ class Views:
             self.log_the_user_in(username)
             # the code below is executed if the request method
             # was GET or the credentials were invalid
-        return flask.render_template('/login.html', form=login_form)
-    
+        rsp = flask.make_response(flask.render_template('/login.html', form=login_form))
+        rsp.set_cookie(username)
+        return rsp
