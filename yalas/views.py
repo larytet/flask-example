@@ -11,6 +11,8 @@ class Views:
     def __init__(self, app):
         self.app = app
         self.add_routes(app)
+    
+    def add_routes(self, app):
         self.ROUTES = [
             FlaskRoute('/',                     'index',    self.index,         None),
             FlaskRoute('/link',                 'link',     self.link,          None),
@@ -19,10 +21,6 @@ class Views:
             FlaskRoute('/hello/<string:name>',  'hello',    self.hello,         None),
             FlaskRoute('/upload',               'upload',   self.upload_file,   methods=['GET', 'POST']),
         ]
-
-    
-    def add_routes(self, app):
-
         for flask_route in self.ROUTES:
             methods = flask_route.methods 
             if methods is None:
