@@ -25,6 +25,11 @@ class AppTestCase(unittest.TestCase):
         rv = self.app.get('/hello/test1')
         assert b'Hello' in rv.data
         assert b'test1' in rv.data
+
+    def test_search(self):
+        search_query = {'search': "find me"}
+        rv = self.app.post('/seacrh', data=search_query, follow_redirects=True)
+        assert 'find me' in rv.data
         
     def test_upload(self):
         rv = self.app.get('/upload')
