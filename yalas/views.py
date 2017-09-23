@@ -11,11 +11,7 @@ class Views:
     def __init__(self, app):
         self.app = app
         self.add_routes(app)
-
-    
-    def add_routes(self, app):
-
-        ROUTES = [
+        self.ROUTES = [
             FlaskRoute('/',                     'index',    self.index,         None),
             FlaskRoute('/link',                 'link',     self.link,          None),
             FlaskRoute('/search',               'search',   self.search,        methods=['GET', 'POST']),
@@ -24,7 +20,10 @@ class Views:
             FlaskRoute('/upload',               'upload',   self.upload_file,   methods=['GET', 'POST']),
         ]
 
-        for flask_route in ROUTES:
+    
+    def add_routes(self, app):
+
+        for flask_route in self.ROUTES:
             methods = flask_route.methods 
             if methods is None:
                 methods = ['GET']
@@ -35,12 +34,9 @@ class Views:
         return flask.render_template('url.html', name="style.css", url=url)
     
     def index(self):
-        urls = [
-            ("/search", "search"),
-            ("/upload", "upload"),
-            ("/hello", "hello"),
-            ("/link", "link"),
-        ]
+        urls = []
+        for flask_route in self.ROUTES:
+            urls.append((flask_route.route, flask_route.name))
         return flask.render_template('index.html', urls=urls)
     
     def hello(self, name=None):
