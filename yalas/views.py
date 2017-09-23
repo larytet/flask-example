@@ -38,6 +38,8 @@ class Views:
         urls = [
             ("/search", "search"),
             ("/upload", "upload"),
+            ("/hello", "hello"),
+            ("/link", "link"),
         ]
         return flask.render_template('index.html', urls=urls)
     
