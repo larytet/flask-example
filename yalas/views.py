@@ -4,7 +4,7 @@ import werkzeug
 import os
 import collections
 
-FlaskRoute = collections.namedtuple('FlaskRoute', ['route', 'name', 'cb', 'methods'], verbose=False)
+FlaskRoute = collections.namedtuple('FlaskRoute', ['route', 'name', 'cb', 'methods', 'index'], verbose=False)
 
 class Views:
     
@@ -14,12 +14,12 @@ class Views:
     
     def add_routes(self, app):
         self.ROUTES = [
-            FlaskRoute('/',                     'index',    self.index,         None),
-            FlaskRoute('/link',                 'link',     self.link,          None),
-            FlaskRoute('/search',               'search',   self.search,        methods=['GET', 'POST']),
-            FlaskRoute('/hello/',               'hello',    self.hello,         None),
-            FlaskRoute('/hello/<string:name>',  'hello',    self.hello,         None),
-            FlaskRoute('/upload',               'upload',   self.upload_file,   methods=['GET', 'POST']),
+            FlaskRoute('/',                     'index',    self.index,         None,                       True),
+            FlaskRoute('/link',                 'link',     self.link,          None,                       True),
+            FlaskRoute('/search',               'search',   self.search,        methods=['GET', 'POST'],    True),
+            FlaskRoute('/hello/',               'hello',    self.hello,         None,                       True),
+            FlaskRoute('/hello/<string:name>',  'hello',    self.hello,         None,                       False),
+            FlaskRoute('/upload',               'upload',   self.upload_file,   methods=['GET', 'POST'],    True),
         ]
         for flask_route in self.ROUTES:
             methods = flask_route.methods 
@@ -34,7 +34,8 @@ class Views:
     def index(self):
         urls = []
         for flask_route in self.ROUTES:
-            urls.append((flask_route.route, flask_route.name))
+            if flask_route.index:
+                urls.append((flask_route.route, flask_route.name))
         return flask.render_template('index.html', urls=urls)
     
     def hello(self, name=None):
