@@ -36,12 +36,7 @@ class Views:
     def log_the_user_in(self, username):
         if not username in self.users:
             self.users[username] = {'time':time.clock(), 'searches':[]}
-            
-    def update_user_searches(self, username, search_query):
-        userdata = self.get_user_data(username)
-        if userdata:
-            userdata['searches'].append(search_query)
-            
+                        
     def get_user_data(self, username):
         return self.users.get(username, None)
         
@@ -102,7 +97,8 @@ class Views:
         return flask.render_template('upload.html') 
          
         
-    def flash_user(self, username):
+    def flash_user(self, request):
+        username = request.cookies.get('username', None)
         if not username:
             flask.flash("Not logged in")
         else:
@@ -111,6 +107,13 @@ class Views:
                 flask.flash("Logged in as '{0}':'{1}'".format(username, userdata))
             else:
                 flask.flash("Unknown user '{0}'".format(username))
+                
+    def update_user_searches(self, request, search_query):
+        username = request.cookies.get('username', None)
+        if username:
+            userdata = self.get_user_data(username)
+            if userdata:
+                userdata['searches'].append(search_query)
                     
     def search(self):
         request = flask.request
@@ -118,14 +121,13 @@ class Views:
     
         flask.flash("Form errors: {0}".format(search_form.errors))
         if request.method == 'POST':
-            username = request.cookies.get('username', None)
             search_query = request.form['search']
             #flask.flash("Search query: {0}".format(search_query))
             if search_form.validate():
                 # Save the comment here.
                 flask.flash('Search ' + search_query)
-                self.update_user_searches(username, search_query)
-                self.flash_user(username)
+                self.update_user_searches(request, search_query)
+                self.flash_user(request)
             else:
                 flask.flash("Got '{0}'. All the form fields are required. ".format(search_query))
      
