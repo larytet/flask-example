@@ -103,7 +103,7 @@ class Views:
             if not username:
                 flask.flash("Not logged in")
             else:
-                flask.flash("Logged in")
+                flask.flash("Logged in as '{0}'".format(username))
                 
             search_query = request.form['search']
             flask.flash("Search query: {0}".format(search_query))
