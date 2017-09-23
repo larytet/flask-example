@@ -12,6 +12,7 @@ class Views:
     def __init__(self, app):
         self.app = app
         self.add_routes(app)
+        self.users = []
     
     def add_routes(self, app):
         self.ROUTES = [
@@ -21,7 +22,7 @@ class Views:
             FlaskRoute('/hello/',               'hello',    self.hello,         None,               True),
             FlaskRoute('/hello/<string:name>',  'hello',    self.hello,         None,               False),
             FlaskRoute('/upload',               'upload',   self.upload_file,   ['GET', 'POST'],    True),
-            FlaskRoute('/login',                'login',    self.upload_file,   ['GET', 'POST'],    True),
+            FlaskRoute('/login',                'login',    self.login,         ['GET', 'POST'],    True),
         ]
         for flask_route in self.ROUTES:
             methods = flask_route.methods 
@@ -29,6 +30,10 @@ class Views:
                 methods = ['GET']
             app.add_url_rule(flask_route.route, flask_route.name, flask_route.cb, methods=methods)
     
+    def log_the_user_in(self, username):
+        if not username in self.users:
+            self.users.append(username)
+        
     def link(self):
         url = flask.url_for('static', filename='style.css')
         return flask.render_template('url.html', name="style.css", url=url)
@@ -43,10 +48,6 @@ class Views:
     
     def hello(self, name=None):
         return flask.render_template('hello.html', name=name)
-    
-    class ReusableForm(wtforms.Form):
-        search = wtforms.TextField('Search:', validators=[wtforms.validators.required()])
-     
     
     # Security related feature- make sure that html, php&friends are not here
     ALLOWED_EXTENSIONS = set(['txt', 'pdf', 'png', 'jpg', 'jpeg', 'gif'])
@@ -89,15 +90,15 @@ class Views:
 
         return flask.render_template('upload.html') 
          
+    class SearchForm(wtforms.Form):
+        search = wtforms.TextField('Search:', validators=[wtforms.validators.required()])
+
     def search(self):
         request = flask.request
-        search_form = self.ReusableForm(request.form)
+        search_form = self.SearchForm(request.form)
     
         flask.flash("Form errors: {0}".format(search_form.errors))
-        print search_form
-        print request.form
         if request.method == 'POST':
-            print request.form
             search_query = request.form['search']
             flask.flash("Search query: {0}".format(search_query))
             if search_form.validate():
@@ -109,4 +110,17 @@ class Views:
         return flask.render_template('search.html', form=search_form)
     
     
+    class LoginForm(wtforms.Form):
+        login = wtforms.TextField('Username:', validators=[wtforms.validators.required()])
+        
+    def login(self):
+        request = flask.request
+        login_form = self.LoginForm(request.form)
+        if request.method == 'POST':
+            username = request.form['username']
+            flask.flash("Login: {0}".format(username))
+            self.log_the_user_in(username)
+            # the code below is executed if the request method
+            # was GET or the credentials were invalid
+        return flask.render_template('/', form=login_form)
     
