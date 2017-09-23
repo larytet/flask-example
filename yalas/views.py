@@ -122,5 +122,5 @@ class Views:
             self.log_the_user_in(username)
             # the code below is executed if the request method
             # was GET or the credentials were invalid
-        return flask.render_template('/', form=login_form)
+        return flask.render_template('/login.html', form=login_form)
     
