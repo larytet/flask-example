@@ -43,7 +43,7 @@ class AppTestCase(unittest.TestCase):
             assert test.expected_response in rv.data
                 
     def test_search(self):
-        search_query = {"search": 'find me'}
+        search_query = {"search": 'find me1'}
         rv = self.app.post('/search', data=search_query, follow_redirects=True)
         assert 'find me' in rv.data
         
