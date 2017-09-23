@@ -111,12 +111,12 @@ class Views:
                 flask.flash("Logged in as '{0}':'{1}'".format(username, self.get_user_data(username)))
                 
             search_query = request.form['search']
-            flask.flash("Search query: {0}".format(search_query))
+            #flask.flash("Search query: {0}".format(search_query))
             if search_form.validate():
                 # Save the comment here.
                 flask.flash('Search ' + search_query)
             else:
-                flask.flash('All the form fields are required. ')
+                flask.flash("Got '{0}'. All the form fields are required. ".format(search_query))
      
         rsp = flask.make_response(flask.render_template('search.html', form=search_form))
         return rsp
