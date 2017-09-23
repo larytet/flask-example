@@ -14,7 +14,7 @@ class Views:
     def __init__(self, app):
         self.app = app
         self.add_routes(app)
-        self.users = []
+        self.users = {}
     
     def add_routes(self, app):
         self.ROUTES = [
