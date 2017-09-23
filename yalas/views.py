@@ -5,6 +5,8 @@ import os
 import collections
 import operator
 
+import time
+
 FlaskRoute = collections.namedtuple('FlaskRoute', ['route', 'name', 'cb', 'methods', 'index'], verbose=False)
 
 class Views:
@@ -32,7 +34,10 @@ class Views:
     
     def log_the_user_in(self, username):
         if not username in self.users:
-            self.users.append(username)
+            self.users.append({username:{'time':time.clock()}})
+            
+    def get_user_data(self, username):
+        return self.users.get(username, None)
         
     def link(self):
         url = flask.url_for('static', filename='style.css')
@@ -103,7 +108,7 @@ class Views:
             if not username:
                 flask.flash("Not logged in")
             else:
-                flask.flash("Logged in as '{0}'".format(username))
+                flask.flash("Logged in as '{0}':'{1}'".format(username, self.get_user_data(username)))
                 
             search_query = request.form['search']
             flask.flash("Search query: {0}".format(search_query))
