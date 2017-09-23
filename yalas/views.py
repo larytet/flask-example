@@ -117,6 +117,7 @@ class Views:
     def login(self):
         request = flask.request
         login_form = self.LoginForm(request.form)
+        username = None
         if request.method == 'POST':
             username = request.form['username']
             flask.flash("Login: {0}".format(username))
@@ -124,5 +125,6 @@ class Views:
             # the code below is executed if the request method
             # was GET or the credentials were invalid
         rsp = flask.make_response(flask.render_template('/login.html', form=login_form))
-        rsp.set_cookie(username)
+        if username:
+            rsp.set_cookie(username)
         return rsp
