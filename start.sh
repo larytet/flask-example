@@ -10,7 +10,7 @@ then
 	flask_process_id=$!
 	echo Flask is started $flask_process_id
 	sleep 1
-	python $init_path/../yalas_test.py
+	pytest -s $init_path/../yalas_test.py
 	#kill $flask_process_id
 	cd $current_dir
 
