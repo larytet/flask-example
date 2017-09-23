@@ -111,7 +111,7 @@ class Views:
     
     
     class LoginForm(wtforms.Form):
-        login = wtforms.TextField('Username:', validators=[wtforms.validators.required()])
+        username = wtforms.TextField('Username:', validators=[wtforms.validators.required()])
         
     def login(self):
         request = flask.request
