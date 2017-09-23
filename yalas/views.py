@@ -35,10 +35,34 @@ class Views:
     
     def log_the_user_in(self, username):
         if not username in self.users:
-            self.users[username] = {'time':time.clock(), 'searches':[]}
+            self.users[username] = {'time':time.clock(), 'searches':[], 'uploads': []}
                         
     def get_user_data(self, username):
         return self.users.get(username, None)
+
+    def flash_user(self, request):
+        username = request.cookies.get('username', None)
+        if not username:
+            flask.flash("Not logged in")
+        else:
+            userdata = self.get_user_data(username)
+            if userdata:
+                flask.flash("Logged in as '{0}':'{1}'".format(username, userdata))
+            else:
+                flask.flash("Unknown user '{0}'".format(username))
+                
+    def update_user(self, request, key, data):
+        username = request.cookies.get('username', None)
+        if username:
+            userdata = self.get_user_data(username)
+            if userdata:
+                userdata[key].append(data)
+                
+    def update_user_searches(self, request, search_query):
+        self.update_user('searches', search_query)
+                
+    def update_user_uploads(self, request, filename):
+        self.update_user('uploads', filename)
         
     def link(self):
         url = flask.url_for('static', filename='style.css')
@@ -89,31 +113,14 @@ class Views:
                 filename = werkzeug.utils.secure_filename(attr_file.filename)
                 flask.flash('Uploaded {0} to {1}'.format(filename, self.app.config.upload_folder))
                 attr_file.save(os.path.join(self.app.config.upload_folder, filename))
+                self.update_user_uploads(request, filename)
+                self.flash_user(request)
                 return flask.redirect(flask.url_for('upload', filename=filename))
             else:
                 flask.flash('File type {0} is not supported'.format(file_extension))
                 return flask.redirect(request.url)
 
         return flask.render_template('upload.html') 
-         
-        
-    def flash_user(self, request):
-        username = request.cookies.get('username', None)
-        if not username:
-            flask.flash("Not logged in")
-        else:
-            userdata = self.get_user_data(username)
-            if userdata:
-                flask.flash("Logged in as '{0}':'{1}'".format(username, userdata))
-            else:
-                flask.flash("Unknown user '{0}'".format(username))
-                
-    def update_user_searches(self, request, search_query):
-        username = request.cookies.get('username', None)
-        if username:
-            userdata = self.get_user_data(username)
-            if userdata:
-                userdata['searches'].append(search_query)
                     
     def search(self):
         request = flask.request
