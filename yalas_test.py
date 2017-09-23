@@ -43,9 +43,9 @@ class AppTestCase(unittest.TestCase):
             assert test.expected_response in rv.data
                 
     def test_search(self):
-        search_query = {"search": 'find me1'}
-        rv = self.app.post('/search', data=search_query, follow_redirects=True)
-        assert 'find me' in rv.data
+        search_query = "find me quick"
+        rv = self.app.post('/search', data={"search": search_query}, follow_redirects=True)
+        assert search_query in rv.data
         
 
 if __name__ == '__main__':
