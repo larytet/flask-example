@@ -27,8 +27,7 @@ class AppTestCase(unittest.TestCase):
         assert b'test1' in rv.data
 
     def test_search(self):
-        form = {'search':'find me'}
-        rv = self.app.post('/seacrh', data=form, follow_redirects=True)
+        rv = self.app.post('/seacrh', data="find me", follow_redirects=True)
         assert 'find me' in rv.data
         
     def test_upload(self):
