@@ -103,30 +103,30 @@ class Views:
     class SearchForm(wtforms.Form):
         search = wtforms.TextField('Search:', validators=[wtforms.validators.required()])
 
+    def flash_user(self, username):
+        if not username:
+            flask.flash("Not logged in")
+        else:
+            userdata = self.get_user_data(username)
+            if userdata:
+                flask.flash("Logged in as '{0}':'{1}'".format(username, userdata))
+            else:
+                flask.flash("Unknown user '{0}'".format(username))
+                    
     def search(self):
         request = flask.request
         search_form = self.SearchForm(request.form)
     
         flask.flash("Form errors: {0}".format(search_form.errors))
         if request.method == 'POST':
-            username  = request.cookies.get('username', None)
-            if not username:
-                flask.flash("Not logged in")
-            else:
-                userdata = self.get_user_data(username)
-                if userdata:
-                    flask.flash("Logged in as '{0}':'{1}'".format(username, userdata))
-                else:
-                    flask.flash("Unknown user '{0}'".format(username))
-                    
-                
+            username = request.cookies.get('username', None)
             search_query = request.form['search']
             #flask.flash("Search query: {0}".format(search_query))
             if search_form.validate():
                 # Save the comment here.
                 flask.flash('Search ' + search_query)
                 self.update_user_searches(username, search_query)
-                    
+                self.flash_user(username)
             else:
                 flask.flash("Got '{0}'. All the form fields are required. ".format(search_query))
      
