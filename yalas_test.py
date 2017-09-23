@@ -44,7 +44,7 @@ class AppTestCase(unittest.TestCase):
                 
     def test_search(self):
         search_query = {"search": 'find me'}
-        rv = self.app.post('/seacrh', data=search_query, follow_redirects=True)
+        rv = self.app.post('/seacrh', data=None, follow_redirects=True)
         assert 'find me' in rv.data
         
 
