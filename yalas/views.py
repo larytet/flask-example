@@ -3,7 +3,7 @@ import wtforms
 import werkzeug
 import os
 import collections
-from _ast import operator
+import operator
 
 FlaskRoute = collections.namedtuple('FlaskRoute', ['route', 'name', 'cb', 'methods', 'index'], verbose=False)
 
