@@ -90,6 +90,7 @@ class Views:
         search_form = self.ReusableForm(request.form)
     
         flask.flash("Form errors: {0}".format(search_form.errors))
+        print search_form
         if request.method == 'POST':
             print request.form
             search_query = request.form['search']
