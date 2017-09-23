@@ -59,10 +59,10 @@ class Views:
                 userdata[key].append(data)
                 
     def update_user_searches(self, request, search_query):
-        self.update_user('searches', search_query)
+        self.update_user(request, 'searches', search_query)
                 
     def update_user_uploads(self, request, filename):
-        self.update_user('uploads', filename)
+        self.update_user(request, 'uploads', filename)
         
     def link(self):
         url = flask.url_for('static', filename='style.css')
