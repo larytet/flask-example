@@ -22,6 +22,10 @@ flask_app.secret_key = os.urandom(24).encode('hex')  # flask_app.config['SECRET_
 UPLOAD_FOLDER = os.path.abspath('./uploads')
 flask_app.config.upload_folder = UPLOAD_FOLDER
 create_folder(UPLOAD_FOLDER)
+flask_app.giphy_api_key = os.environ.get('GIPHY_API_KEY', None)
+if not flask_app.giphy_api_key:
+    print("No GIPHY API key provided. Try to set GIPHY_API_KEY")
+    flask_app.giphy_api_key = "UKNOWN_API_KEY"
 
 
 @flask_app.errorhandler(404)
