@@ -134,7 +134,8 @@ class Views:
             if result:
                 if value % 3 == 0:
                     url = self.get_giphy_url()
-                    return flask.redirect(url)
+                    if url:
+                        return flask.redirect(url)
 
         return flask.render_template('query_number.html', param=param)
     
