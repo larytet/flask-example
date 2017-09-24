@@ -113,12 +113,12 @@ class Views:
         
         giphy_dict_data = giphy_dict.get("data", None)
         if not giphy_dict_data:
-            flask.flash("No data in JSON {0} from {1}, exc {2}".format(giphy_json, giphy_query, e))
+            flask.flash("No data in JSON {0} from {1}".format(giphy_json, giphy_query))
             return None
         
         giphy_dict_data_image_original = giphy_dict_data.get('image_original_url', None)
         if not giphy_dict_data_image_original:
-            flask.flash("No image_original_url in JSON {0} from {1}, exc {2}".format(giphy_json, giphy_query, e))
+            flask.flash("No image_original_url in JSON {0} from {1}".format(giphy_json, giphy_query))
             return None
         
         # I shall get something like https://media2.giphy.com/media/l0MYxef0mpdcnQnvi//giphy.gif
