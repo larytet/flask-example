@@ -30,6 +30,10 @@ class Views:
         self.app = app
         self.add_routes(app)
         self.users = {}
+        self.giphy_query = self.giphy_query_random()
+    
+    def giphy_query_random(self):
+        return 'http://api.giphy.com/v1/gifs/random?api_key={0}&tag=success'.format(self.app.giphy_api_key)
     
     def add_routes(self, app):
         self.ROUTES = [
@@ -95,31 +99,36 @@ class Views:
         return flask.render_template('hello.html', name=name)
 
     def get_giphy_url(self):
-        giphy_query = "http://api.giphy.com//v1/gifs/random?api_key={0}&tag=success".format(self.app.giphy_api_key)
         
         # Get the JSON file
-        try:
-            giphy_repsonse = urllib2.urlopen(giphy_query)
-            giphy_json = giphy_repsonse.read()
-        except Exception as e:
-            flask.flash("Failed to fetch the giphy image from {0}, exc {1}".format(giphy_query, e))
-            return None
         
-        try:
-            giphy_dict = json.loads(giphy_json)
-        except Exception as e:
-            flask.flash("Failed to parse JSON {0} from {1}, exc {2}".format(giphy_json, giphy_query, e))
-            return None
-        
-        giphy_dict_data = giphy_dict.get("data", None)
-        if not giphy_dict_data:
-            flask.flash("No data in JSON {0} from {1}".format(giphy_json, giphy_query))
-            return None
-        
-        giphy_dict_data_image_original = giphy_dict_data.get('image_original_url', None)
-        if not giphy_dict_data_image_original:
-            flask.flash("No image_original_url in JSON {0} from {1}".format(giphy_json, giphy_query))
-            return None
+        giphy_dict_data_image_original = None
+        giphy_query = self.giphy_query
+        while True:
+            try:
+                giphy_repsonse = urllib2.urlopen(giphy_query)
+                giphy_json = giphy_repsonse.read()
+            except Exception as e:
+                flask.flash("Failed to fetch the giphy image from {0}, exc {1}".format(giphy_query, e))
+                break
+            
+            try:
+                giphy_dict = json.loads(giphy_json)
+            except Exception as e:
+                flask.flash("Failed to parse JSON {0} from {1}, exc {2}".format(giphy_json, giphy_query, e))
+                break
+            
+            giphy_dict_data = giphy_dict.get("data", None)
+            if not giphy_dict_data:
+                flask.flash("No data in JSON {0} from {1}".format(giphy_json, giphy_query))
+                break
+            
+            giphy_dict_data_image_original = giphy_dict_data.get('image_original_url', None)
+            if not giphy_dict_data_image_original:
+                flask.flash("No image_original_url in JSON {0} from {1}".format(giphy_json, giphy_query))
+                break
+            
+            break
         
         # I shall get something like https://media2.giphy.com/media/l0MYxef0mpdcnQnvi//giphy.gif
         return giphy_dict_data_image_original
